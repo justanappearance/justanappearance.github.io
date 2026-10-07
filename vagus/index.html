@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vagus</title>
+<meta name="description" content="Vagus tracks new music from the artists you follow, so you never miss a release.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg:        #F7F8FB;
+    --surface:   #FFFFFF;
+    --border:    #DDE1EB;
+    --text:      #1A1E2D;
+    --muted:     #64708A;
+    --accent:    #3B6EE8;
+    --accent-bg: #EEF2FD;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0F1117;
+      --surface:   #181C27;
+      --border:    #272D3E;
+      --text:      #E8EBF5;
+      --muted:     #8892AA;
+      --accent:    #5B8DF5;
+      --accent-bg: #1A2240;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:        #0F1117;
+    --surface:   #181C27;
+    --border:    #272D3E;
+    --text:      #E8EBF5;
+    --muted:     #8892AA;
+    --accent:    #5B8DF5;
+    --accent-bg: #1A2240;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 48px 64px;
+  }
+
+  .page {
+    max-width: 600px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .header { display: flex; flex-direction: column; gap: 10px; }
+
+  .app-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .header p { color: var(--muted); max-width: 52ch; }
+
+  .badge {
+    align-self: start;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .card li { padding-left: 18px; position: relative; }
+  .card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .links { display: flex; flex-direction: column; }
+  .links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding-block: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .links a:last-child { border-bottom: none; }
+  .links a span { color: var(--muted); }
+  .links a:hover, .links a:focus-visible { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .footer {
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    body { padding-block: 32px 48px; }
+    h1 { font-size: 24px; }
+    .card { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <span class="app-label">Vagus</span>
+    <h1>Never miss a release from an artist you follow.</h1>
+    <p>Follow the artists you care about, and every new album, EP and single they release shows up in your inbox. Connect Last.fm and Vagus marks off what you've already heard, so you always know what's left to listen to.</p>
+    <span class="badge">Coming soon to Google Play</span>
+  </div>
+
+  <div class="card">
+    <span class="card-title">What it does</span>
+    <ul>
+      <li>New releases from every artist you follow, in one inbox, checked daily</li>
+      <li>Last.fm sync marks what you've already listened to</li>
+      <li>Rank artists into tiers and filter by tier, tag, genre or release type</li>
+      <li>Browse each artist's full discography</li>
+      <li>Notifications when new music drops</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-title">Support</span>
+    <div class="links">
+      <a href="privacy-policy">Privacy policy <span>&rarr;</span></a>
+      <a href="delete-account">Delete your account <span>&rarr;</span></a>
+      <a href="mailto:justanappearance@gmail.com">Contact the developer <span>justanappearance@gmail.com</span></a>
+    </div>
+  </div>
+
+  <div class="footer">
+    Vagus is developed by justanappearance.
+  </div>
+
+</div>
+</body>
+</html>
