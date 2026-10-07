@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>justanappearance</title>
+<meta name="description" content="Apps by justanappearance, including Vagus, a tracker for new music from the artists you follow.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg:        #F7F8FB;
+    --surface:   #FFFFFF;
+    --border:    #DDE1EB;
+    --text:      #1A1E2D;
+    --muted:     #64708A;
+    --accent:    #3B6EE8;
+    --accent-bg: #EEF2FD;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0F1117;
+      --surface:   #181C27;
+      --border:    #272D3E;
+      --text:      #E8EBF5;
+      --muted:     #8892AA;
+      --accent:    #5B8DF5;
+      --accent-bg: #1A2240;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:        #0F1117;
+    --surface:   #181C27;
+    --border:    #272D3E;
+    --text:      #E8EBF5;
+    --muted:     #8892AA;
+    --accent:    #5B8DF5;
+    --accent-bg: #1A2240;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 48px 64px;
+  }
+
+  .page {
+    max-width: 600px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .header { display: flex; flex-direction: column; gap: 10px; }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .header p { color: var(--muted); max-width: 52ch; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .apps { display: flex; flex-direction: column; gap: 12px; }
+
+  .app {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .app:hover, .app:focus-visible { border-color: var(--accent); }
+
+  .app-name {
+    font-size: 17px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  .app p { color: var(--muted); }
+
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .footer {
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    body { padding-block: 32px 48px; }
+    h1 { font-size: 24px; }
+    .app { padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>justanappearance</h1>
+    <p>Small apps made by one person, mostly to scratch my own itch.</p>
+  </div>
+
+  <div class="apps">
+    <span class="section-title">Apps</span>
+    <a class="app" href="/vagus/">
+      <span class="app-name">Vagus <span class="badge">Android · coming soon</span></span>
+      <p>Never miss a release from an artist you follow. New albums, EPs and singles land in one inbox, and Last.fm marks off what you've already heard.</p>
+    </a>
+  </div>
+
+  <div class="footer">
+    Contact: <a href="mailto:justanappearance@gmail.com">justanappearance@gmail.com</a>
+  </div>
+
+</div>
+</body>
+</html>
