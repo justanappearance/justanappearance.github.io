@@ -241,7 +241,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 <div class="section">
   <h2>Overview</h2>
-  <p>Vagus is a music release tracker. You follow artists, and the app notifies you when they release new music. This policy explains what data the app collects, who it's shared with, and how long it's kept.</p>
+  <p>Vagus is a music release tracker and organizer. You follow artists, sort them with tiers and tags, and the app notifies you when they release new music. This policy explains what data the app collects, who it's shared with, and how long it's kept.</p>
   <p>Vagus is developed and operated by a single developer. Your data is not sold and is not used for advertising.</p>
 </div>
 
@@ -258,8 +258,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
       </thead>
       <tbody>
         <tr>
-          <td>Email address &amp; account info</td>
-          <td>To identify your account and sync your library across devices. Provided via Google Sign-In or email/password through Firebase Authentication.</td>
+          <td>Name, email address and profile photo</td>
+          <td>To identify your account and sync your library across devices. Provided by Google Sign-In through Firebase Authentication.</td>
         </tr>
         <tr>
           <td>Artists you track</td>
@@ -267,11 +267,11 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
         </tr>
         <tr>
           <td>Tags and tiers</td>
-          <td>Labels you assign to artists, stored in your account to organize and filter your library.</td>
+          <td>Labels you assign to artists, stored in your account to organize and filter your library and to restore them if you reinstall.</td>
         </tr>
         <tr>
           <td>Inbox and release history</td>
-          <td>Releases added to your inbox (album name, release date, artist). Stored per-user in Firestore.</td>
+          <td>Releases added to your inbox (album name, release date, artist) and which ones you've marked. Stored per-user in Firestore.</td>
         </tr>
         <tr>
           <td>Push notification token</td>
@@ -283,25 +283,25 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
         </tr>
         <tr>
           <td>Last.fm credentials (optional)</td>
-          <td>If you choose to connect Last.fm, your username and API key are stored locally on your device only and are never transmitted to Vagus servers. They are used to retrieve your listening history from Last.fm's API.</td>
+          <td>If you choose to connect Last.fm, your username (and your own API key, if you add one) is stored on your device only and is never sent to Vagus servers. It is used to read your listening history from Last.fm. That history stays on your device, where it marks what you've already heard.</td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <h3>Local cache</h3>
-  <p>Vagus stores a local database on your device containing your artist list, release catalogue, and inbox so the app works without waiting on a network request each time. This mirrors your Firestore data and is cleared when you sign out or uninstall the app.</p>
+  <p>Vagus stores a local database on your device containing your artist list, release catalogue, and inbox so the app works without waiting on a network request each time. This mirrors your Firestore data and is cleared when you delete your account, when a different account signs in on the device, or when you uninstall the app.</p>
 </div>
 
 <div class="section">
   <h2>What we don't collect</h2>
   <ul>
     <li>Your Spotify account data, listening history, or playlists</li>
-    <li>Listening or playback data from any source</li>
+    <li>Listening or playback data on our servers (Last.fm history stays on your device)</li>
     <li>Location data</li>
     <li>Contacts or address book</li>
     <li>Microphone or camera access</li>
-    <li>Any data from users who are not signed in</li>
+    <li>Any app data from users who are not signed in</li>
   </ul>
 </div>
 
@@ -318,11 +318,20 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   <h3>Deezer</h3>
   <p>Used to fetch release catalogue and artist metadata via Deezer's public API. No user account or authentication is required. Governed by <a href="https://www.deezer.com/legal/personal-datas" target="_blank" rel="noopener">Deezer's Privacy Policy</a>.</p>
 
+  <h3>Apple iTunes Search</h3>
+  <p>Used to improve artist search and genres. When you search for an artist, your phone sends the search text and your country to Apple. Governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</p>
+
+  <h3>Wikidata and Wikipedia</h3>
+  <p>Our servers use these to look up artist information. No user data is sent.</p>
+
+  <h3>Exportify and TuneMyMusic (optional)</h3>
+  <p>If you choose to import a playlist or send music to a playlist, Vagus directs you to these services and you use them directly. Vagus never receives your sign-in details for them. Their own privacy policies apply.</p>
+
   <h3>MusicBrainz</h3>
-  <p>Used to look up open music metadata. No user data is sent. Governed by the <a href="https://metabrainz.org/privacy" target="_blank" rel="noopener">MetaBrainz Privacy Policy</a>.</p>
+  <p>Used to look up track listings for a small number of older releases. No user data is sent. Governed by the <a href="https://metabrainz.org/privacy" target="_blank" rel="noopener">MetaBrainz Privacy Policy</a>.</p>
 
   <h3>RevenueCat</h3>
-  <p>Used to manage in-app subscriptions and verify purchase receipts. RevenueCat may receive your device's purchase receipt and a device identifier. Governed by <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</p>
+  <p>Used to manage in-app subscriptions and verify purchase receipts. RevenueCat may receive your device's purchase receipt, a device identifier, and your Vagus account ID. Governed by <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</p>
 
   <h3>Last.fm (optional)</h3>
   <p>If you choose to enable Last.fm integration by supplying your username and API key, Vagus reads your listening history from Last.fm to show which tracks you've heard. Your Last.fm credentials are stored only on your device. Governed by <a href="https://www.last.fm/legal/privacy" target="_blank" rel="noopener">Last.fm's Privacy Policy</a>.</p>
@@ -333,8 +342,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 <div class="section">
   <h2>Data retention &amp; deletion</h2>
-  <p>Your Firestore data (artists, inbox, tags) is retained as long as your account exists. Your local device cache is cleared when you sign out or uninstall the app.</p>
-  <p>To delete your account and all associated data, contact us at the address below. We will remove your Firestore data within 30 days of a verified request.</p>
+  <p>Your Firestore data (artists, inbox, tags) is retained as long as your account exists. Your local device cache is cleared when you delete your account, when a different account signs in on the device, or when you uninstall the app.</p>
+  <p>To delete your account and its data, go to Settings &gt; Delete account in the app, which takes effect right away. If you can't open the app, follow the steps on our <a href="delete-account">account deletion page</a> and we will complete your request within 30 days. Deleting your account doesn't cancel a subscription; cancel that in Google Play.</p>
 </div>
 
 <div class="section">
