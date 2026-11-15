@@ -6,209 +6,411 @@
 <title>Vagus: Music Release Tracker and Organizer for Android</title>
 <meta name="description" content="Vagus is an Android app that tracks new music releases from the artists you follow and lets you organize those artists with tiers and tags of your own.">
 <link rel="canonical" href="https://justanappearance.com/vagus/">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap">
+<meta name="theme-color" content="#061418">
+<link rel="icon" href="img/icon-192.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script>document.documentElement.classList.add('js');</script>
 <style>
+  /* Colors come from the app icon: deep river navy, sea teal accent
+     (#00C0A8, the same color the app's theme is built from). */
   :root {
-    --bg:        #F7F8FB;
+    --bg:        #F3F8F7;
     --surface:   #FFFFFF;
-    --border:    #DDE1EB;
-    --text:      #1A1E2D;
-    --muted:     #64708A;
-    --accent:    #3B6EE8;
-    --accent-bg: #EEF2FD;
+    --border:    #D3E3E0;
+    --text:      #0B2227;
+    --muted:     #4F6D6A;
+    --accent:    #00806F;
+    --accent-bg: #DFF3EF;
+    --hero-bg:   #061418;
+    --hero-text: #E8F6F3;
+    --hero-muted:#9DC2BD;
+    --hero-accent:#2AD8BF;
   }
-
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg:        #0F1117;
-      --surface:   #181C27;
-      --border:    #272D3E;
-      --text:      #E8EBF5;
-      --muted:     #8892AA;
-      --accent:    #5B8DF5;
-      --accent-bg: #1A2240;
+      --bg:        #061418;
+      --surface:   #0B2026;
+      --border:    #17363C;
+      --text:      #E8F6F3;
+      --muted:     #93B5B0;
+      --accent:    #2AD8BF;
+      --accent-bg: #0C3934;
     }
   }
-
   :root[data-theme="dark"] {
-    --bg:        #0F1117;
-    --surface:   #181C27;
-    --border:    #272D3E;
-    --text:      #E8EBF5;
-    --muted:     #8892AA;
-    --accent:    #5B8DF5;
-    --accent-bg: #1A2240;
+    --bg:        #061418;
+    --surface:   #0B2026;
+    --border:    #17363C;
+    --text:      #E8F6F3;
+    --muted:     #93B5B0;
+    --accent:    #2AD8BF;
+    --accent-bg: #0C3934;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+  html { scroll-behavior: smooth; }
   body {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 15px;
-    line-height: 1.6;
-    padding-inline: 20px;
-    padding-block: 48px 64px;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
   }
+  a { color: inherit; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: 100%; max-width: 1080px; margin-inline: auto; padding-inline: 24px; }
 
-  .page {
-    max-width: 600px;
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+  /* ---------- Hero: always the night-river colors of the artwork ---------- */
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(1200px 600px at 75% 30%, rgba(0,192,168,0.20), transparent 60%),
+      radial-gradient(800px 500px at 10% 60%, rgba(0,120,140,0.14), transparent 60%),
+      var(--hero-bg);
+    color: var(--hero-text);
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
   }
-
-  .header { display: flex; flex-direction: column; gap: 10px; }
-
-  .app-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-block: 22px; gap: 16px;
   }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+  .brand img { width: 34px; height: 34px; border-radius: 9px; }
+  .nav-links { display: flex; gap: 26px; font-size: 14px; font-weight: 500; }
+  .nav-links a { text-decoration: none; color: var(--hero-muted); transition: color .2s; }
+  .nav-links a:hover { color: var(--hero-text); }
 
-  h1 {
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 1.2;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+    padding-block: 56px 96px;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--hero-accent);
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 5.6vw, 64px);
+    line-height: 1.04;
+    font-weight: 800;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
-
-  .header p { color: var(--muted); max-width: 52ch; }
-
-  .badge {
-    align-self: start;
-    background: var(--accent-bg);
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 6px;
+  .hero h1 em { font-style: normal; color: var(--hero-accent); }
+  .hero p.lede {
+    margin-top: 22px;
+    font-size: 18px;
+    color: var(--hero-muted);
+    max-width: 46ch;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px; border-radius: 999px;
+    font-weight: 600; font-size: 15px; text-decoration: none;
+    transition: transform .2s, background .2s, border-color .2s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--hero-accent); color: #04211D; }
+  .btn-primary:hover { background: #5BE6D2; }
+  .btn-ghost { border: 1px solid rgba(157,194,189,0.35); color: var(--hero-text); }
+  .btn-ghost:hover { border-color: var(--hero-accent); }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 22px; font-size: 14px; color: var(--hero-muted);
+  }
+  .status::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--hero-accent);
+    box-shadow: 0 0 0 4px rgba(42,216,191,0.18);
   }
 
-  .suggest {
-    align-self: start;
-    background: var(--accent);
-    color: #FFFFFF;
-    font-weight: 600;
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    margin-top: 4px;
+  .art {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 380px);
+    aspect-ratio: 578 / 1024;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+    transform: rotate(2deg);
   }
-  .suggest:hover { opacity: 0.9; }
-  .asked { color: var(--accent); font-weight: 500; text-decoration: none; font-size: 14px; }
-  .asked:hover { text-decoration: underline; }
+  .art img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); transition: transform 8s ease-out; }
+  .art.is-visible img { transform: scale(1); }
+  .art::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(6,20,24,0.55));
+  }
+  .art-caption {
+    position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 1;
+    font-size: 13px; color: rgba(232,246,243,0.85);
+  }
+  .art-caption b { color: #fff; font-weight: 600; }
 
-  .card {
+  /* ---------- Sections ---------- */
+  section { padding-block: 112px; }
+  .section-head { max-width: 640px; margin-bottom: 56px; }
+  .kicker { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  h2 {
+    margin-top: 12px;
+    font-size: clamp(30px, 3.8vw, 44px);
+    line-height: 1.1; font-weight: 800; letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .section-head p { margin-top: 16px; color: var(--muted); font-size: 18px; }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .feature {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    border-radius: 20px;
+    padding: 28px;
+    transition: transform .25s, border-color .25s;
+  }
+  .feature:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .feature .icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--accent-bg); color: var(--accent);
+    display: grid; place-items: center; margin-bottom: 20px;
+  }
+  .feature h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+  .feature p { margin-top: 8px; color: var(--muted); font-size: 15px; }
+  .feature.wide { grid-column: span 2; }
+
+  .story {
+    background: var(--surface);
+    border-block: 1px solid var(--border);
+  }
+  .story-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
+  .story blockquote {
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.35; font-weight: 600; letter-spacing: -0.02em;
+  }
+  .story blockquote span { color: var(--accent); }
+  .story .who { margin-top: 20px; color: var(--muted); font-size: 15px; }
+  .story-copy p { color: var(--muted); font-size: 17px; }
+  .story-copy p + p { margin-top: 16px; }
+  .meaning {
+    margin-top: 28px; padding: 20px 22px; border-radius: 16px;
+    background: var(--accent-bg); color: var(--text); font-size: 15px;
+  }
+  .meaning b { color: var(--accent); }
+
+  .cta {
+    text-align: center;
+    background:
+      radial-gradient(700px 300px at 50% 0%, rgba(0,192,168,0.22), transparent 70%),
+      var(--hero-bg);
+    color: var(--hero-text);
+    border-radius: 28px;
+    border: 1px solid rgba(42,216,191,0.22);
+    padding: 72px 28px;
+  }
+  .cta h2 { margin-top: 0; }
+  .cta p { margin: 16px auto 0; max-width: 48ch; color: var(--hero-muted); font-size: 18px; }
+  .cta .actions { justify-content: center; }
+
+  .support { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .support a {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding-block: 18px; border-bottom: 1px solid var(--border);
+    text-decoration: none; font-weight: 500;
+    transition: color .2s, padding .2s;
+  }
+  .support a span { color: var(--muted); }
+  .support a:hover { color: var(--accent); padding-left: 4px; }
+
+  footer { padding-block: 40px 56px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); }
+  .footer-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .social { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* ---------- Gentle reveal on scroll (content shows without JS) ---------- */
+  .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .js [data-reveal].is-visible { opacity: 1; transform: none; }
+  .js .art[data-reveal] { transform: translateY(24px) rotate(2deg); }
+  .js .art[data-reveal].is-visible { transform: rotate(2deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .js [data-reveal], .js .art[data-reveal] { opacity: 1; transform: none; transition: none; }
+    .art img { transition: none; transform: none; }
+    html { scroll-behavior: auto; }
   }
 
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--muted);
+  /* ---------- Phones ---------- */
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; padding-block: 32px 72px; }
+    .art { width: min(100%, 320px); }
+    .features { grid-template-columns: 1fr 1fr; }
+    .feature.wide { grid-column: span 2; }
+    .story-grid { grid-template-columns: 1fr; gap: 32px; }
+    .support { grid-template-columns: 1fr; }
+    section { padding-block: 80px; }
   }
-
-  .card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .card li { padding-left: 18px; position: relative; }
-  .card li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.62em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
-
-  .links { display: flex; flex-direction: column; }
-  .links a {
-    color: var(--text);
-    text-decoration: none;
-    font-weight: 500;
-    padding-block: 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .links a:last-child { border-bottom: none; }
-  .links a span { color: var(--muted); }
-  .links a:hover, .links a:focus-visible { color: var(--accent); }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-
-  .footer {
-    font-size: 13px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-    padding-top: 24px;
-  }
-  .footer a { color: var(--accent); text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
-  .footer .social { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
-
-  @media (max-width: 480px) {
-    body { padding-block: 32px 48px; }
-    h1 { font-size: 24px; }
-    .card { padding: 18px; }
+  @media (max-width: 560px) {
+    .wrap { padding-inline: 16px; }
+    .nav-links { display: none; }
+    .features { grid-template-columns: 1fr; }
+    .feature.wide { grid-column: auto; }
+    .hero p.lede, .section-head p, .cta p { font-size: 17px; }
+    .cta { padding: 56px 20px; border-radius: 22px; }
   }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <div class="header">
-    <span class="app-label">Vagus</span>
-    <h1>Track new releases and organize the artists you love.</h1>
-    <p>Vagus is a music release tracker and music organizer for Android. Every new album, EP and single from your artists lands in one Inbox, and tiers and tags of your own make it easy to find the music you want to hear.</p>
-    <span class="badge">Now in testing on Google Play</span>
-    <a class="suggest" href="https://docs.google.com/forms/d/e/1FAIpQLSen1MlLortzFQfKv8W7nPEnsGNvnyA3-vDgoAlYR2wDfcqphw/viewform">Suggest a feature</a>
-    <a class="asked" href="feedback">See what people asked for, and what changed &rarr;</a>
-  </div>
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="/vagus/"><img src="img/icon-192.webp" alt="" width="34" height="34">Vagus</a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="changelog">Release notes</a>
+        <a href="feedback">What changed</a>
+      </div>
+    </nav>
 
-  <div class="card">
-    <span class="card-title">How it works</span>
-    <ul>
-      <li><strong>Organize:</strong> rank artists into tiers, add your own tags, and get genres added for you</li>
-      <li><strong>Find:</strong> filter new releases by tier, tag, genre or type, so you only see what you're after</li>
-      <li><strong>Listen:</strong> select everything you haven't heard and send it to Spotify, Apple Music or another app</li>
-      <li><strong>Explore:</strong> browse every artist's full discography in the Catalogue</li>
-      <li><strong>Stay on top:</strong> notifications for the tiers and tags you choose</li>
-    </ul>
-  </div>
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow" data-reveal>Music release tracker for Android</span>
+        <h1 data-reveal style="--d:.08s">Organize the artists you love. <em>Never miss what they release.</em></h1>
+        <p class="lede" data-reveal style="--d:.16s">Every new album, EP and single from your artists lands in one Inbox, and tiers and tags of your own make it easy to find the music you want to hear.</p>
+        <div class="actions" data-reveal style="--d:.24s">
+          <a class="btn btn-primary" href="#how">See how it works</a>
+          <a class="btn btn-ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSen1MlLortzFQfKv8W7nPEnsGNvnyA3-vDgoAlYR2wDfcqphw/viewform">Suggest a feature</a>
+        </div>
+        <span class="status" data-reveal style="--d:.32s">Now in testing on Google Play</span>
+      </div>
 
-  <div class="card">
-    <span class="card-title">Support</span>
-    <div class="links">
-      <a href="feedback">What you asked for, and what changed <span>&rarr;</span></a>
-      <a href="changelog">Release notes <span>&rarr;</span></a>
-      <a href="privacy-policy">Privacy policy <span>&rarr;</span></a>
-      <a href="delete-account">Delete your account <span>&rarr;</span></a>
-      <a href="mailto:justanappearance@gmail.com">Contact the developer <span>justanappearance@gmail.com</span></a>
+      <figure class="art" data-reveal style="--d:.2s">
+        <img src="img/river.webp" alt="Illustration of a wanderer standing in a clear teal river, a boat and koi nearby" width="578" height="1024">
+        <figcaption class="art-caption"><b>Vagus</b> means wanderer.</figcaption>
+      </figure>
     </div>
   </div>
+</header>
 
-  <div class="footer">
-    Contact or business inquiries: <a href="mailto:justanappearance@gmail.com">justanappearance@gmail.com</a><br>
+<main>
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <span class="kicker">How it works</span>
+        <h2>Your artists, in order. Their new music, in one place.</h2>
+        <p>Follow the artists you care about and Vagus checks every one of them for you.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature wide" data-reveal>
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h12M3 18h6"/></svg></div>
+          <h3>Organize</h3>
+          <p>Rank artists into tiers, add your own tags, and get genres added for you.</p>
+        </article>
+        <article class="feature" data-reveal style="--d:.08s">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
+          <h3>Stay on top</h3>
+          <p>Notifications for the tiers and tags you choose.</p>
+        </article>
+        <article class="feature" data-reveal>
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg></div>
+          <h3>Find</h3>
+          <p>Filter new releases by tier, tag, genre or type, so you only see what you're after.</p>
+        </article>
+        <article class="feature" data-reveal style="--d:.08s">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
+          <h3>Listen</h3>
+          <p>Select everything you haven't heard and send it to Spotify, Apple Music or another app.</p>
+        </article>
+        <article class="feature" data-reveal style="--d:.16s">
+          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <h3>Explore</h3>
+          <p>Browse every artist's full discography in the Catalogue.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="story">
+    <div class="wrap story-grid">
+      <div data-reveal>
+        <span class="kicker">Why Vagus exists</span>
+        <blockquote style="margin-top:16px">I followed many artists, had no good way to organize them, and <span>kept missing new releases.</span></blockquote>
+        <p class="who">From the developer</p>
+      </div>
+      <div class="story-copy" data-reveal style="--d:.1s">
+        <p>Streaming apps are built for playing music, not for keeping track of the people who make it. New albums get buried, and a long list of followed artists turns into a wall of names.</p>
+        <p>Vagus is the app I wanted: one Inbox for everything new, and tiers and tags so the artists I care about most are always easy to find.</p>
+        <div class="meaning"><b>Vagus</b> is Latin for wandering. It's for wandering through music, and finding your way back to the artists you love.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta" data-reveal>
+        <h2>Shaped by the people using it.</h2>
+        <p>Testers asked for email sign-in and a Done button on the pickers. Both shipped within days. See what people asked for, and what changed.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="feedback">What changed &rarr;</a>
+          <a class="btn btn-ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSen1MlLortzFQfKv8W7nPEnsGNvnyA3-vDgoAlYR2wDfcqphw/viewform">Suggest a feature</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head" data-reveal style="margin-bottom:24px">
+        <span class="kicker">Support</span>
+      </div>
+      <div class="support" data-reveal>
+        <a href="changelog">Release notes <span>&rarr;</span></a>
+        <a href="feedback">What you asked for, and what changed <span>&rarr;</span></a>
+        <a href="privacy-policy">Privacy policy <span>&rarr;</span></a>
+        <a href="delete-account">Delete your account <span>&rarr;</span></a>
+        <a href="mailto:justanappearance@gmail.com">Contact the developer <span>justanappearance@gmail.com</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>Made by <a href="/">justanappearance</a>. Business inquiries: <a href="mailto:justanappearance@gmail.com">justanappearance@gmail.com</a></span>
     <a class="social" href="https://www.instagram.com/justanappearance/">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
       Instagram
     </a>
   </div>
+</footer>
 
-</div>
+<script>
+  // Fade sections in as they scroll into view. Without JavaScript, or with
+  // reduced motion, everything is simply visible.
+  (function () {
+    var items = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 </body>
 </html>
