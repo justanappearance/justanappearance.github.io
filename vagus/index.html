@@ -80,9 +80,14 @@
   }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
   .brand img { width: 34px; height: 34px; border-radius: 9px; }
-  .nav-links { display: flex; gap: 26px; font-size: 14px; font-weight: 500; }
-  .nav-links a { text-decoration: none; color: var(--hero-muted); transition: color .2s; }
-  .nav-links a:hover { color: var(--hero-text); }
+  .nav-links { display: flex; gap: 10px; font-size: 14px; font-weight: 600; }
+  .nav-links a {
+    text-decoration: none; color: var(--hero-text);
+    padding: 9px 16px; border-radius: 999px;
+    border: 1px solid rgba(157,194,189,0.35);
+    transition: border-color .2s, background .2s;
+  }
+  .nav-links a:hover { border-color: var(--hero-accent); background: rgba(42,216,191,0.08); }
 
   .hero-grid {
     display: grid;
@@ -167,6 +172,17 @@
   }
   .section-head p { margin-top: 16px; color: var(--muted); font-size: 18px; }
 
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+  }
+  .shots img {
+    width: 100%; height: auto; display: block;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 48px -24px rgba(0,0,0,0.45);
+  }
   .features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -189,6 +205,46 @@
   .feature p { margin-top: 8px; color: var(--muted); font-size: 15px; }
   .feature.wide { grid-column: span 2; }
 
+  .how-title { margin-top: 0; font-size: clamp(36px, 5vw, 56px); }
+  .feature-rows { display: flex; flex-direction: column; gap: 120px; margin-top: 40px; }
+  .feature-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+  }
+  .feature-row.flip .feature-copy { order: 2; }
+  .feature-copy h3 {
+    font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1;
+    font-weight: 800; letter-spacing: -0.03em; text-wrap: balance;
+  }
+  .feature-copy p { margin-top: 16px; color: var(--muted); font-size: 18px; max-width: 42ch; }
+  .phone {
+    justify-self: center; position: relative;
+    width: min(100%, 300px); padding: 10px;
+    background: #0A0F12; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 44px; cursor: zoom-in;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6);
+    transition: transform .3s;
+  }
+  .phone::before {
+    content: ""; position: absolute; inset: -60px; z-index: -1;
+    background: radial-gradient(closest-side, rgba(0,192,168,0.28), transparent);
+  }
+  .phone:hover { transform: translateY(-4px); }
+  .phone img { display: block; width: 100%; height: auto; border-radius: 34px; }
+  .js .phone[data-reveal] { transform: translateY(24px); }
+  .js .phone[data-reveal].is-visible { transform: none; }
+  .js .phone[data-reveal].is-visible:hover { transform: translateY(-4px); }
+
+  .lightbox {
+    margin: auto; padding: 0; border: 0; background: transparent;
+    max-width: 92vw; max-height: 92vh; overflow: visible;
+  }
+  .lightbox::backdrop { background: rgba(3,10,12,0.85); backdrop-filter: blur(4px); }
+  .lightbox img { display: block; max-height: 88vh; max-width: 92vw; width: auto; border-radius: 28px; cursor: zoom-out; }
+  .lightbox-close {
+    position: absolute; top: -14px; right: -14px;
+    width: 40px; height: 40px; border-radius: 50%; border: 0;
+    background: var(--hero-accent); color: #04211D; font-size: 24px; line-height: 1; cursor: pointer;
+  }
   .story {
     background: var(--surface);
     border-block: 1px solid var(--border);
@@ -201,6 +257,7 @@
   .story blockquote span { color: var(--accent); }
   .story .who { margin-top: 20px; color: var(--muted); font-size: 15px; }
   .story-copy p { color: var(--muted); font-size: 17px; }
+  .story-copy strong { color: var(--text); }
   .story-copy p + p { margin-top: 16px; }
   .meaning {
     margin-top: 28px; padding: 20px 22px; border-radius: 16px;
@@ -222,6 +279,25 @@
   .cta p { margin: 16px auto 0; max-width: 48ch; color: var(--hero-muted); font-size: 18px; }
   .cta .actions { justify-content: center; }
 
+  .faq { display: flex; flex-direction: column; gap: 12px; max-width: 760px; }
+  .faq-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 0 22px;
+    transition: border-color .2s;
+  }
+  .faq-item[open] { border-color: var(--accent); }
+  .faq-item summary {
+    cursor: pointer; list-style: none;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding-block: 18px; font-weight: 600; font-size: 17px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+"; color: var(--accent); font-size: 22px; font-weight: 500;
+    transition: transform .2s;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item p { color: var(--muted); padding-bottom: 20px; }
   .support { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
   .support a {
     display: flex; justify-content: space-between; gap: 16px;
@@ -251,6 +327,22 @@
 
   /* ---------- Phones ---------- */
   @media (max-width: 860px) {
+    .feature-rows { gap: 88px; }
+    .feature-row { grid-template-columns: 1fr; gap: 36px; }
+    .feature-row.flip .feature-copy { order: 0; }
+    .phone { width: min(78%, 280px); }
+    .shots {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 62%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 12px;
+      margin-inline: -24px;
+      padding-inline: 24px;
+      scroll-padding-inline: 24px;
+    }
+    .shots img { scroll-snap-align: start; }
     .hero-grid { grid-template-columns: 1fr; gap: 48px; padding-block: 32px 72px; }
     .art { width: min(100%, 320px); }
     .features { grid-template-columns: 1fr 1fr; }
@@ -261,6 +353,7 @@
   }
   @media (max-width: 560px) {
     .wrap { padding-inline: 16px; }
+    .shots { margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; grid-auto-columns: 72%; }
     .nav-links { display: none; }
     .features { grid-template-columns: 1fr; }
     .feature.wide { grid-column: auto; }
@@ -276,9 +369,8 @@
     <nav class="nav">
       <a class="brand" href="/vagus/"><img src="img/icon-192.webp" alt="" width="34" height="34">Vagus</a>
       <div class="nav-links">
-        <a href="#how">How it works</a>
         <a href="changelog">Release notes</a>
-        <a href="feedback">What changed</a>
+        <a href="feedback">Suggest a feature</a>
       </div>
     </nav>
 
@@ -288,10 +380,9 @@
         <h1 data-reveal style="--d:.08s">Organize the artists you love. <em>Never miss what they release.</em></h1>
         <p class="lede" data-reveal style="--d:.16s">Every new album, EP and single from your artists lands in one Inbox, and tiers and tags of your own make it easy to find the music you want to hear.</p>
         <div class="actions" data-reveal style="--d:.24s">
-          <a class="btn btn-primary" href="#how">See how it works</a>
-          <a class="btn btn-ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSen1MlLortzFQfKv8W7nPEnsGNvnyA3-vDgoAlYR2wDfcqphw/viewform">Suggest a feature</a>
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.justanappearance.music_tracker">Get it on Google Play</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
         </div>
-        <span class="status" data-reveal style="--d:.32s">Now in testing on Google Play</span>
       </div>
 
       <figure class="art" data-reveal style="--d:.2s">
@@ -305,38 +396,62 @@
 <main>
   <section id="how">
     <div class="wrap">
-      <div class="section-head" data-reveal>
-        <span class="kicker">How it works</span>
-        <h2>Your artists, in order. Their new music, in one place.</h2>
-        <p>Follow the artists you care about and Vagus checks every one of them for you.</p>
-      </div>
-
-      <div class="features">
-        <article class="feature wide" data-reveal>
-          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h12M3 18h6"/></svg></div>
-          <h3>Organize</h3>
-          <p>Rank artists into tiers, add your own tags, and get genres added for you.</p>
-        </article>
-        <article class="feature" data-reveal style="--d:.08s">
-          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
-          <h3>Stay on top</h3>
-          <p>Notifications for the tiers and tags you choose.</p>
-        </article>
-        <article class="feature" data-reveal>
-          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg></div>
-          <h3>Find</h3>
-          <p>Filter new releases by tier, tag, genre or type, so you only see what you're after.</p>
-        </article>
-        <article class="feature" data-reveal style="--d:.08s">
-          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
-          <h3>Listen</h3>
-          <p>Select everything you haven't heard and send it to Spotify, Apple Music or another app.</p>
-        </article>
-        <article class="feature" data-reveal style="--d:.16s">
-          <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-          <h3>Explore</h3>
-          <p>Browse every artist's full discography in the Catalogue.</p>
-        </article>
+      <h2 class="how-title" data-reveal>How it works</h2>
+      <div class="feature-rows">
+      <article class="feature-row">
+        <div class="feature-copy" data-reveal>
+          <h3>Every new release, in one Inbox</h3>
+          <p>New albums, EPs and singles from the artists you follow land here, newest first. What you've already heard fades out, so the new music stands out.</p>
+        </div>
+        <button class="phone" type="button" data-reveal style="--d:.1s" aria-label="Enlarge: Every new release, in one Inbox">
+          <img src="img/screen-inbox.webp" alt="The Vagus Inbox: new releases from followed artists, with tiers and tags" width="720" height="1560" loading="lazy">
+        </button>
+      </article>
+      <article class="feature-row flip">
+        <div class="feature-copy" data-reveal>
+          <h3>Rank your artists your way</h3>
+          <p>Sort them into tiers, from S for the ones you never want to miss, and add tags of your own like "Check out" or "Gym". Genres are added for you.</p>
+        </div>
+        <button class="phone" type="button" data-reveal style="--d:.1s" aria-label="Enlarge: Rank your artists your way">
+          <img src="img/screen-artists.webp" alt="The Artists tab: each artist with a tier, tags and genres" width="720" height="1560" loading="lazy">
+        </button>
+      </article>
+      <article class="feature-row">
+        <div class="feature-copy" data-reveal>
+          <h3>Find exactly what you want to hear</h3>
+          <p>Filter by tier, tag, genre or release type. Tap a filter twice to hide it instead, for "everything except Gym".</p>
+        </div>
+        <button class="phone" type="button" data-reveal style="--d:.1s" aria-label="Enlarge: Find exactly what you want to hear">
+          <img src="img/screen-filters.webp" alt="The filter sheet: tiers, genres, tags, listened status and release types" width="720" height="1560" loading="lazy">
+        </button>
+      </article>
+      <article class="feature-row flip">
+        <div class="feature-copy" data-reveal>
+          <h3>Send it all to a playlist</h3>
+          <p>Select everything you haven't heard in one tap, then send it to Spotify, Apple Music, YouTube Music or another app.</p>
+        </div>
+        <button class="phone" type="button" data-reveal style="--d:.1s" aria-label="Enlarge: Send it all to a playlist">
+          <img src="img/screen-send.webp" alt="Selection mode: seven unheard releases selected, ready to send to a playlist" width="720" height="1560" loading="lazy">
+        </button>
+      </article>
+      <article class="feature-row">
+        <div class="feature-copy" data-reveal>
+          <h3>Every album and single in one place</h3>
+          <p>Each artist's full discography, from their newest single back to their first album, with the songs you've played checked off.</p>
+        </div>
+        <button class="phone" type="button" data-reveal style="--d:.1s" aria-label="Enlarge: Every album and single in one place">
+          <img src="img/screen-artist.webp" alt="An artist page: the artist's photo above their albums, EPs and singles" width="720" height="1560" loading="lazy">
+        </button>
+      </article>
+      <article class="feature-row flip">
+        <div class="feature-copy" data-reveal>
+          <h3>See what you've been playing</h3>
+          <p>Connect Last.fm and your plays show up here, matched to your artists. Add anyone you've been listening to with one tap.</p>
+        </div>
+        <button class="phone" type="button" data-reveal style="--d:.1s" aria-label="Enlarge: See what you've been playing">
+          <img src="img/screen-history.webp" alt="The History tab: recent plays with tiers, tags and listened checkmarks" width="720" height="1560" loading="lazy">
+        </button>
+      </article>
       </div>
     </div>
   </section>
@@ -345,13 +460,13 @@
     <div class="wrap story-grid">
       <div data-reveal>
         <span class="kicker">Why Vagus exists</span>
-        <blockquote style="margin-top:16px">I followed many artists, had no good way to organize them, and <span>kept missing new releases.</span></blockquote>
-        <p class="who">From the developer</p>
+        <blockquote style="margin-top:16px">Find music I like easily. <span>Then listen to it easily.</span></blockquote>
+        <p class="who">I made Vagus for a problem I had.</p>
       </div>
       <div class="story-copy" data-reveal style="--d:.1s">
-        <p>Streaming apps are built for playing music, not for keeping track of the people who make it. New albums get buried, and a long list of followed artists turns into a wall of names.</p>
-        <p>Vagus is the app I wanted: one Inbox for everything new, and tiers and tags so the artists I care about most are always easy to find.</p>
-        <div class="meaning"><b>Vagus</b> is Latin for wandering. It's for wandering through music, and finding your way back to the artists you love.</div>
+        <p>I love music, but finding new music from the artists I like was harder than it should be. There was no one place to see it all. Following artists on Spotify felt clunky, and nothing really told me when they released something.</p>
+        <p>So I made the app I wanted. Vagus tells me when my artists release new music, and lets me sort those artists my way. When I want to hear something specific, I pick a tier or tag, see exactly what fits, send it to a playlist and listen. That simple.</p>
+        <div class="meaning"><b>Vagus</b> is Latin for wanderer. Inspired by the vagus nerve.</div>
       </div>
     </div>
   </section>
@@ -359,12 +474,50 @@
   <section>
     <div class="wrap">
       <div class="cta" data-reveal>
-        <h2>Shaped by the people using it.</h2>
-        <p>Testers asked for email sign-in and a Done button on the pickers. Both shipped within days. See what people asked for, and what changed.</p>
+        <h2>What should Vagus do next?</h2>
+        <p>Suggest a feature. Every suggestion gets read, and you can see what people asked for and what I did about it.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="feedback">What changed &rarr;</a>
-          <a class="btn btn-ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSen1MlLortzFQfKv8W7nPEnsGNvnyA3-vDgoAlYR2wDfcqphw/viewform">Suggest a feature</a>
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSen1MlLortzFQfKv8W7nPEnsGNvnyA3-vDgoAlYR2wDfcqphw/viewform">Suggest a feature</a>
+          <a class="btn btn-ghost" href="feedback">See past suggestions &rarr;</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>FAQ</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details class="faq-item">
+          <summary>Is Vagus free?</summary>
+          <p>Yes. Vagus is free right now, with no ads.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Which music apps does it work with?</summary>
+          <p>Any of them. Vagus doesn't play music itself: tap a release to open it in your streaming app, or send a whole selection to a playlist in Spotify, Apple Music, YouTube Music and others through TuneMyMusic.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I add my artists?</summary>
+          <p>Search for them by name, or import a whole playlist at once: export it as a CSV file (from Spotify with exportify.net, or from other apps with TuneMyMusic) and pick the file in Vagus.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What are tiers and tags?</summary>
+          <p>Tiers rank your artists: S for the ones you never want to miss, then A, B and so on. Tags are your own labels, like "Check out" or "Gym". Filter the Inbox by any of them to see just the new music you're after.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does Vagus know what I've listened to?</summary>
+          <p>Connect Last.fm and Vagus marks releases as listened when they show up in your listening history. You can also mark releases yourself.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How quickly does new music show up?</summary>
+          <p>Vagus checks for new releases every morning, with extra checks early on Friday when most music comes out, so Friday releases usually appear within a few hours.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is it on iPhone?</summary>
+          <p>Not yet. Vagus is on Android for now.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -376,9 +529,8 @@
       </div>
       <div class="support" data-reveal>
         <a href="changelog">Release notes <span>&rarr;</span></a>
-        <a href="feedback">What you asked for, and what changed <span>&rarr;</span></a>
+        <a href="feedback">Suggestions, and what changed <span>&rarr;</span></a>
         <a href="privacy-policy">Privacy policy <span>&rarr;</span></a>
-        <a href="delete-account">Delete your account <span>&rarr;</span></a>
         <a href="mailto:justanappearance@gmail.com">Contact the developer <span>justanappearance@gmail.com</span></a>
       </div>
     </div>
@@ -394,6 +546,27 @@
     </a>
   </div>
 </footer>
+
+<dialog class="lightbox" aria-label="App screen">
+  <img alt="">
+  <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+</dialog>
+
+<script>
+  // Tap a phone to see the screen full size; tap anywhere or press Esc to close.
+  (function () {
+    var box = document.querySelector('.lightbox');
+    var img = box.querySelector('img');
+    document.querySelectorAll('.phone').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var src = btn.querySelector('img');
+        img.src = src.src; img.alt = src.alt;
+        box.showModal();
+      });
+    });
+    box.addEventListener('click', function () { box.close(); });
+  })();
+</script>
 
 <script>
   // Fade sections in as they scroll into view. Without JavaScript, or with
