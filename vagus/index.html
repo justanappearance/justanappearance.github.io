@@ -236,10 +236,11 @@
 
   .lightbox {
     margin: auto; padding: 0; border: 0; background: transparent;
-    max-width: 92vw; max-height: 92vh; overflow: visible;
+    max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); overflow: visible;
   }
   .lightbox::backdrop { background: rgba(3,10,12,0.85); backdrop-filter: blur(4px); }
-  .lightbox img { display: block; max-height: 88vh; max-width: 92vw; width: auto; border-radius: 28px; cursor: zoom-out; }
+  /* Fits the window height with breathing room, so the close button stays in view. */
+  .lightbox img { display: block; max-height: calc(100vh - 96px); max-width: calc(100vw - 96px); width: auto; border-radius: 28px; cursor: zoom-out; }
   .lightbox-close {
     position: absolute; top: -14px; right: -14px;
     width: 40px; height: 40px; border-radius: 50%; border: 0;
@@ -360,6 +361,12 @@
     .hero p.lede, .section-head p, .cta p { font-size: 17px; }
     .cta { padding: 56px 20px; border-radius: 22px; }
   }
+  /* Big monitors: scale the whole page up instead of leaving wide empty
+     margins (Mike, 2026-11-24: on a 2560px screen it looked small). */
+  /* The enlarged-screen dialog stays unscaled so it always fits the window. */
+  @media (min-width: 1800px) { body > :not(dialog) { zoom: 1.2; } }
+  @media (min-width: 2300px) { body > :not(dialog) { zoom: 1.4; } }
+  @media (min-width: 3200px) { body > :not(dialog) { zoom: 1.8; } }
 </style>
 </head>
 <body>

@@ -116,6 +116,11 @@
     .card { padding: 20px; border-radius: 16px; }
     .hero-text p { font-size: 17px; }
   }
+  /* Big monitors: scale the whole page up instead of leaving wide empty
+     margins (Mike, 2026-11-24: on a 2560px screen it looked small). */
+  @media (min-width: 1800px) { body { zoom: 1.2; } }
+  @media (min-width: 2300px) { body { zoom: 1.4; } }
+  @media (min-width: 3200px) { body { zoom: 1.8; } }
 </style>
 </head>
 <body>
